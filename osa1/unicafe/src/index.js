@@ -4,25 +4,28 @@ import ReactDOM from 'react-dom'
 const Statistics = ({ good, bad, neutral }) => {
     if (good !== 0 || bad !== 0 || neutral !== 0) {
         return (
-            <>
-                <Statistic name="Hyvä" amount={good} />
-                <Statistic name="Neutraali" amount={neutral} />
-                <Statistic name="Huono" amount={bad} />
-                <Statistic name="Yhteensä" amount={good + bad + neutral} />
-                <Statistic name="Keskiarvo" amount={(good + (bad * -1)) / (good + bad + neutral)} />
-                <Statistic name="Positiivisia (%)" amount={good / (good + bad + neutral) * 100} />
-            </>
+            <table>
+                <tbody>
+                    <Statistic name="Hyvä" amount={good} />
+                    <Statistic name="Neutraali" amount={neutral} />
+                    <Statistic name="Huono" amount={bad} />
+                    <Statistic name="Yhteensä" amount={good + bad + neutral} />
+                    <Statistic name="Keskiarvo" amount={(good + (bad * -1)) / (good + bad + neutral)} />
+                    <Statistic name="Positiivisia (%)" amount={good / (good + bad + neutral) * 100} />
+                </tbody>
+            </table>
         )
     } else {
         return <p>Palautetta ei ole vielä annettu</p>
     }
 }
 
-const Statistic = (props) => {
+const Statistic = ({ name, amount }) => {
     return (
-        <p>
-            {props.name} {props.amount}
-        </p>
+        <tr>
+            <td>{name}</td>
+            <td>{amount}</td>
+        </tr>
     )
 }
 
