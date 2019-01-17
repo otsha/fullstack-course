@@ -5,20 +5,30 @@ const RandomQuoteIndex = () => {
     return Math.floor(Math.random() * anecdotes.length)
 }
 
-const Button = ({ action, value, text }) => {
+const Button = ({ action, text }) => {
     return (
-        <button onClick={() => action(value)}>{text}</button>
+        <button onClick={action}>{text}</button>
     )
 }
 
 const App = (props) => {
     const [selected, setSelected] = useState(0)
+    const [votes, setVotes] = useState(new Array(6).fill(0))
 
     return (
         <div>
             {props.anecdotes[selected]}
             <br />
-            <Button action={setSelected} value={RandomQuoteIndex} text="Random Quote" />
+            <p>Votes: {votes[selected]}</p>
+            <br />
+
+            <Button action={() => {
+                const copy = [...votes]
+                copy[selected] += 1
+                setVotes(copy)
+            }} text="Vote" />
+
+            <Button action={() => { setSelected(RandomQuoteIndex) }} text="Random Quote" />
         </div>
     )
 }
