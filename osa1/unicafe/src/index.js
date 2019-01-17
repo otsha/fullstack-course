@@ -1,17 +1,21 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Statistics = ({good, bad, neutral}) => {
-    return (
-        <>
-            <Stat name="Hyvä" amount={good} />
-            <Stat name="Neutraali" amount={neutral} />
-            <Stat name="Huono" amount={bad} />
-            <Stat name="Yhteensä" amount={good + bad + neutral} />
-            <Stat name="Keskiarvo" amount={(good + (bad * -1)) / (good + bad + neutral)} />
-            <Stat name="Positiivisia (%)" amount={good / (good + bad + neutral) * 100} />
-        </>
-    )
+const Statistics = ({ good, bad, neutral }) => {
+    if (good !== 0 || bad !== 0 || neutral !== 0) {
+        return (
+            <>
+                <Stat name="Hyvä" amount={good} />
+                <Stat name="Neutraali" amount={neutral} />
+                <Stat name="Huono" amount={bad} />
+                <Stat name="Yhteensä" amount={good + bad + neutral} />
+                <Stat name="Keskiarvo" amount={(good + (bad * -1)) / (good + bad + neutral)} />
+                <Stat name="Positiivisia (%)" amount={good / (good + bad + neutral) * 100} />
+            </>
+        )
+    } else {
+        return <p>Palautetta ei ole vielä annettu</p>
+    }
 }
 
 const Stat = (props) => {
