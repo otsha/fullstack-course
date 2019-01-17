@@ -11,24 +11,45 @@ const Button = ({ action, text }) => {
     )
 }
 
+const TopAnecdote = ({ votes }) => {
+    let i = 0
+
+    let largest = i
+
+    for (i = 1; i < votes.length; i++) {
+        if (votes[i] > votes[largest]) {
+            largest = i
+        }
+    }
+
+    return largest
+}
+
 const App = (props) => {
     const [selected, setSelected] = useState(0)
-    const [votes, setVotes] = useState(new Array(6).fill(0))
+    const [votes, setVotes] = useState(new Array(5).fill(0))
+    const [top, setTop] = useState(0)
+
+    const vote = () => {
+        const copy = [...votes]
+        copy[selected] += 1
+        setVotes(copy)
+    }
 
     return (
         <div>
+            <h1>Anecdote of the Day</h1>
             {props.anecdotes[selected]}
             <br />
             <p>Votes: {votes[selected]}</p>
-            <br />
-
-            <Button action={() => {
-                const copy = [...votes]
-                copy[selected] += 1
-                setVotes(copy)
-            }} text="Vote" />
-
+            <Button action={vote} text="Vote" />
             <Button action={() => { setSelected(RandomQuoteIndex) }} text="Random Quote" />
+
+            <h1>Top Anecdote</h1>
+            {props.anecdotes[top]}
+            <br />
+            <p>Votes: {votes[top]}</p>
+            <Button action={() => {setTop(TopAnecdote({votes}))}} text="Refresh" />
         </div>
     )
 }
