@@ -1,6 +1,33 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+const Statistics = ({good, bad, neutral}) => {
+    return (
+        <>
+            <Stat name="Hyvä" amount={good} />
+            <Stat name="Neutraali" amount={neutral} />
+            <Stat name="Huono" amount={bad} />
+            <Stat name="Yhteensä" amount={good + bad + neutral} />
+            <Stat name="Keskiarvo" amount={(good + (bad * -1)) / (good + bad + neutral)} />
+            <Stat name="Positiivisia (%)" amount={good / (good + bad + neutral) * 100} />
+        </>
+    )
+}
+
+const Stat = (props) => {
+    return (
+        <p>
+            {props.name} {props.amount}
+        </p>
+    )
+}
+
+const Button = (props) => {
+    return (
+        <button onClick={() => props.action(props.value)}>{props.text}</button>
+    )
+}
+
 const App = () => {
     // tallenna napit omaan tilaansa
     const [good, setGood] = useState(0)
@@ -15,27 +42,8 @@ const App = () => {
             <Button action={setBad} value={bad + 1} text="Huono" />
 
             <h1>Tulokset</h1>
-            <Stat name="Hyvä" amount={good} />
-            <Stat name="Neutraali" amount={neutral} />
-            <Stat name="Huono" amount={bad} />
-            <Stat name="Yhteensä" amount={good + bad + neutral} />
-            <Stat name="Keskiarvo" amount={(good + (bad * -1)) / (good + bad + neutral)} />
-            <Stat name="Positiivisia (%)" amount={good / (good + bad + neutral) * 100} />
+            <Statistics good={good} bad={bad} neutral={neutral} />
         </div>
-    )
-}
-
-const Button = (props) => {
-    return (
-        <button onClick={() => props.action(props.value)}>{props.text}</button>
-    )
-}
-
-const Stat = (props) => {
-    return (
-        <p>
-            {props.name} {props.amount}
-        </p>
     )
 }
 
