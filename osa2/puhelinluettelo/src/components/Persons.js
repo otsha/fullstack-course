@@ -2,13 +2,14 @@ import React from 'react'
 import Person from './Person'
 import personService from '../services/personService'
 
-const Persons = ({ persons, setPersons, filter }) => {
+const Persons = ({ persons, setPersons, filter, setMessage }) => {
     console.log(persons)
 
     const handleDelete = (id) => {
         if (window.confirm("Remove?")) {
             personService.remove(id)
             setPersons(persons.filter(person => person.id !== id))
+            setMessage('Henkilö poistettu onnistuneesti.')
         }
     }
 

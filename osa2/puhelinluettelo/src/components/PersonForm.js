@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import personService from "../services/personService"
 
-const PersonForm = ({ persons, setPersons }) => {
+const PersonForm = ({ persons, setPersons, setMessage }) => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
 
@@ -30,6 +30,7 @@ const PersonForm = ({ persons, setPersons }) => {
                     .update(id, personObject)
                     .then(response => {
                         setPersons(persons.map(person => person.id !== id ? person : response.data))
+                        setMessage(`Henkilön ${newName} numero päivitetty.`)
                         setNewName('')
                         setNewNumber('')
                     })
@@ -39,6 +40,7 @@ const PersonForm = ({ persons, setPersons }) => {
                 .save(personObject)
                 .then(response => {
                     setPersons(persons.concat(response.data))
+                    setMessage(`${newName} lisätty!`)
                     setNewName('')
                     setNewNumber('')
                 })
