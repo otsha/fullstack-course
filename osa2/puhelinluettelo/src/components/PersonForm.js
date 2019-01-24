@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import Axios from 'axios';
+import React, { useState } from 'react'
+import personService from "../services/personService"
 
 const PersonForm = ({ persons, setPersons }) => {
     const [newName, setNewName] = useState('')
@@ -16,18 +16,23 @@ const PersonForm = ({ persons, setPersons }) => {
     const addPerson = (event) => {
         event.preventDefault()
 
+        const personObject = {
+            name: newName,
+            number: newNumber
+        }
+        
         if (newName === '') {
             window.alert('Name cannot be empty')
         } else if (persons.map(person => person.name).includes(newName)) {
             window.alert(`${newName} on jo luettelossa!`)
         } else {
-            Axios.post('http://localhost:3001/persons', { name: newName, number: newNumber})
-            .then(response => {
-                setPersons(persons.concat(response.data))
-                setNewName('')
-                setNewNumber('')
-            })
-            setPersons(persons.concat({ name: newName, number: newNumber }))
+            personService
+                .save(personObject)
+                .then(response => {
+                    setPersons(persons.concat(response.data))
+                    setNewName('')
+                    setNewNumber('')
+                })
         }
     }
 

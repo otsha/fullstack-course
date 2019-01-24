@@ -2,6 +2,7 @@ import React from 'react'
 import Person from './Person'
 
 const Persons = ({ persons, filter }) => {
+    console.log(persons)
     return (
         <>
             {persons.filter(person => person.name.toLowerCase()
