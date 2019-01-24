@@ -1,11 +1,17 @@
 import React from 'react'
 
-const Message = ({ text }) => {
+const Message = ({ text, type }) => {
     if (text === '') {
         return null
+    } else if (type === 'success'){
+        return (
+            <div className="success">
+                {text}
+            </div>
+        )
     } else {
         return (
-            <div className="notification">
+            <div className="error">
                 {text}
             </div>
         )

@@ -13,9 +13,18 @@ code {
     monospace;
 }
 
-div.notification {
+div.success {
   width: 30%;
   background-color: #86bb71;
+  border-radius: 5px;
+  border: 2px;
+  padding: 5px;
+  margin: 5px;
+}
+
+div.error {
+  width: 30%;
+  background-color: #da5d47;
   border-radius: 5px;
   border: 2px;
   padding: 5px;
