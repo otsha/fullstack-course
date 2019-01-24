@@ -20,11 +20,20 @@ const PersonForm = ({ persons, setPersons }) => {
             name: newName,
             number: newNumber
         }
-        
+
         if (newName === '') {
             window.alert('Name cannot be empty')
         } else if (persons.map(person => person.name).includes(newName)) {
-            window.alert(`${newName} on jo luettelossa!`)
+            if (window.confirm(`${newName} on jo luettelossa! Korvataanko vanha numero uudella?`)) {
+                const id = persons.filter(p => p.name === newName)[0].id
+                personService
+                    .update(id, personObject)
+                    .then(response => {
+                        setPersons(persons.map(person => person.id !== id ? person : response.data))
+                        setNewName('')
+                        setNewNumber('')
+                    })
+            }
         } else {
             personService
                 .save(personObject)
