@@ -35,6 +35,7 @@ const Course = ({ course }) => {
         <>
             <Header course={course} />
             <Content parts={course.parts} />
+            <Total parts={course.parts} />
         </>
     )
 }
@@ -62,8 +63,13 @@ const Part = (props) => {
 }
 
 const Total = (props) => {
+    let sum = 0
+    for(let i = 0; i < props.parts.length; i++) {
+        sum += props.parts[i].exercises
+    }
+
     return (
-        <p>yhteensä {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises} tehtävää</p>
+        <p>yhteensä {sum} tehtävää</p>
     )
 }
 
