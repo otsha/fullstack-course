@@ -21,7 +21,7 @@ const App = () => {
       <h1>Country Info</h1>
       <Search filter={filter} setFilter={setFilter} />
       
-      <Countries countries={countries} filter={filter} />
+      <Countries countries={countries} filter={filter} setFilter={setFilter} />
     </div>
   )
 
