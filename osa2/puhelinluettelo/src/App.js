@@ -32,7 +32,7 @@ const App = () => {
 
             <h2>Numerot</h2>
 
-            <Persons persons={persons} filter={filter} />
+            <Persons persons={persons} setPersons={setPersons} filter={filter} />
 
         </div>
     )
