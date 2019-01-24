@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import Axios from 'axios';
 
 const PersonForm = ({ persons, setPersons }) => {
     const [newName, setNewName] = useState('')
@@ -20,6 +21,12 @@ const PersonForm = ({ persons, setPersons }) => {
         } else if (persons.map(person => person.name).includes(newName)) {
             window.alert(`${newName} on jo luettelossa!`)
         } else {
+            Axios.post('http://localhost:3001/persons', { name: newName, number: newNumber})
+            .then(response => {
+                setPersons(persons.concat(response.data))
+                setNewName('')
+                setNewNumber('')
+            })
             setPersons(persons.concat({ name: newName, number: newNumber }))
         }
     }
