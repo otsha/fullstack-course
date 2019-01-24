@@ -8,7 +8,12 @@ const App = () => {
 
     const addName = (event) => {
         event.preventDefault();
-        if (newName !== '') {
+
+        if (newName === '') {
+            window.alert('Name cannot be empty')
+        } else if (persons.map(person => person.name).includes(newName)) {
+            window.alert(`${newName} on jo luettelossa!`)
+        } else {
             setPersons(persons.concat({ name: newName }))
         }
     }
