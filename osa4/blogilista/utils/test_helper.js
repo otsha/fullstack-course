@@ -43,4 +43,6 @@ const blogs = [
     }
 ]
 
-module.exports = { blogs }
+const users = []
+
+module.exports = { blogs, users }
