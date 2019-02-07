@@ -27,6 +27,13 @@ test('correct number of blogs', async () => {
     expect(response.body.length).toBe(6)
 })
 
+test('indentifying field should be called id', async () => {
+    const response = await api.get('/api/blogs')
+    for(blog of response.body) {
+        expect(blog.id).toBeDefined()
+    }
+})
+
 afterAll(() => {
     console.log("You're my wonderwall")
     mongoose.connection.close()
