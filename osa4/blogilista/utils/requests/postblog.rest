@@ -5,5 +5,5 @@ Content-Type: application/json
     "title": "Hello World",
     "author": "Matti Meikäläinen",
     "url": "www.fi",
-    "likes": 5,
+    "likes": 5
 }
