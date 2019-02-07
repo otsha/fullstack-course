@@ -26,8 +26,14 @@ userRouter.post('/', async (req, res, next) => {
 })
 
 userRouter.get('/', async (req, res, next) => {
-    const users = await User.find({})
-    res.json(users)
+    try {
+        const users = await User
+            .find({}).populate('blogs')
+        res.json(users.map(u => u.toJSON()))
+    } catch (exception) {
+        res.status(404).json({ error: exception.message })
+        next(exception)
+    }
 })
 
 module.exports = userRouter
