@@ -3,15 +3,6 @@ const Blog = require('../models/blog')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
-const getToken = request => {
-    const auth = request.get('authorization')
-    if (auth && auth.toLowerCase().startsWith('bearer ')) {
-        return auth.substring(7)
-    }
-
-    return null
-}
-
 blogRouter.get('/', async (request, response) => {
     const blogs = await Blog
         .find({}).populate('users', { username: 1, id: 1 })
@@ -19,11 +10,9 @@ blogRouter.get('/', async (request, response) => {
 })
 
 blogRouter.post('/', async (request, response, next) => {
-    const token = getToken(request)
-
     try {
-        const decoded = jwt.verify(token, process.env.SECRET)
-        if (!token || !decoded.id) {
+        const decoded = jwt.verify(request.token, process.env.SECRET)
+        if (!request.token || !decoded.id) {
             return response.status(401).json({ error: "Invalid token" }).end()
         }
 
@@ -44,11 +33,9 @@ blogRouter.post('/', async (request, response, next) => {
 })
 
 blogRouter.delete('/:id', async (request, response, next) => {
-    const token = getToken(request)
-
     try {
-        const decoded = jwt.verify(token, process.env.SECRET)
-        if (!token || !decoded.id) {
+        const decoded = jwt.verify(request.token, process.env.SECRET)
+        if (!request.token || !decoded.id) {
             return response.status(401).json({ error: "Invalid token" }).end()
         }
 
