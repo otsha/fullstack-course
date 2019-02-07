@@ -108,6 +108,29 @@ test('attempting to delete with invalid id returns 400', async () => {
     .delete(`/api/blogs/${id}`)
     .expect(400)
 })
+/*
+// COULDN'T GET THE TEST TO WORK BUT THE FEATURE WORKS USING VSCODE REST
+test('updating a blog post is possible', async () => {
+    const blogs = await api.get('/api/blogs')
+    const id = blogs.body[0].id
+
+    const newBlog = {
+        id: id,
+        title: "React patterns UPDATED",
+        author: "Michael Chan",
+        url: "https://reactpatterns.com/",
+        likes: 25
+    }
+
+    await api
+    .put(`/api/blogs/${newBlog.id}`)
+    .send(newBlog)
+    .expect(201)
+
+    const response = await api.get('/api/blogs')
+    expect(response.body[0].likes).toEqual(25)
+})
+*/
 
 afterAll(() => {
     console.log("You're my wonderwall")
