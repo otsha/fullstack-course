@@ -64,4 +64,42 @@ const mostBlogs = (blogs) => {
     }
 }
 
-module.exports = { dummy, totalLikes, favouriteBlog, mostBlogs }
+const mostLikes = (blogs) => {
+    if (blogs.length === 0) {
+        return null
+    } else if (blogs.length === 1) {
+        return {
+            author: blogs[0].author,
+            likes: blogs[0].likes
+        }
+    } else {
+        let authorsAndLikes = new Map()
+
+        blogs.map(blog => [blog.author, blog.likes]).forEach(post => {
+            const author = post[0]
+            const likes = post[1]
+
+            if (!authorsAndLikes.has(author)) {
+                authorsAndLikes.set(author, likes)
+            } else {
+                authorsAndLikes.set(author, authorsAndLikes.get(author) + likes)
+            }
+        })
+
+        let authorKeys = Array.from(authorsAndLikes.keys())
+        let most = authorKeys[0]
+        for (let i = 0; i < authorKeys.length; i++) {
+            const current = authorKeys[i]
+            if (authorsAndLikes.get(current) > authorsAndLikes.get(most)) {
+                most = current
+            }
+        }
+
+        return {
+            author: most,
+            likes: authorsAndLikes.get(most)
+        }
+    }
+}
+
+module.exports = { dummy, totalLikes, favouriteBlog, mostBlogs, mostLikes }
