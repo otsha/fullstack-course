@@ -94,6 +94,21 @@ test('posting a blog with empty title or url returns code 400', async () => {
     .expect(400)
 })
 
+test('deleting an existing blog returns code 204', async () => {
+    const id = "5a422a851b54a676234d17f7"
+    
+    await api
+    .delete(`/api/blogs/${id}`)
+    .expect(204)
+})
+
+test('attempting to delete with invalid id returns 400', async () => {
+    const id = "abcd"
+    await api
+    .delete(`/api/blogs/${id}`)
+    .expect(400)
+})
+
 afterAll(() => {
     console.log("You're my wonderwall")
     mongoose.connection.close()
