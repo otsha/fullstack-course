@@ -81,6 +81,19 @@ test('posting a blog without defining likes results in 0 likes', async () => {
     expect(response.body[6].likes).toEqual(0)
 })
 
+test('posting a blog with empty title or url returns code 400', async () => {
+    const newBlog = {
+        url: "test.url"
+    }
+
+    const newBlogObject = new Blog(newBlog)
+    //await newBlogObject.save()
+    await api
+    .post('/api/blogs')
+    .send(newBlogObject)
+    .expect(400)
+})
+
 afterAll(() => {
     console.log("You're my wonderwall")
     mongoose.connection.close()
