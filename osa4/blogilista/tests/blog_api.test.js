@@ -63,7 +63,22 @@ test('new blog post is saved correctly', async () => {
     const response = await api.get('/api/blogs')
     expect(response.body[6].title).toEqual("Hello World")
     expect(response.body[6].author).toEqual("Matti Meikäläinen")
-    expect(response.body[6].author).toEqual("test.url")
+    expect(response.body[6].url).toEqual("test.url")
+    expect(response.body[6].likes).toEqual(3)
+})
+
+test('posting a blog without defining likes results in 0 likes', async () => {
+    const newBlog = {
+        title: "Hello World",
+        author: "Matti Meikäläinen",
+        url: "test.url",
+    }
+
+    const newBlogObject = new Blog(newBlog)
+    await newBlogObject.save()
+
+    const response = await api.get('/api/blogs')
+    expect(response.body[6].likes).toEqual(0)
 })
 
 afterAll(() => {
