@@ -34,6 +34,38 @@ test('indentifying field should be called id', async () => {
     }
 })
 
+test('new blog post increments the number of blogs', async () => {
+    const newBlog = {
+        title: "Hello World",
+        author: "Matti Meikäläinen",
+        url: "test.url",
+        likes: 3,
+    }
+
+    const newBlogObject = new Blog(newBlog)
+    await newBlogObject.save()
+
+    const response = await api.get('/api/blogs')
+    expect(response.body.length).toBe(7)
+})
+
+test('new blog post is saved correctly', async () => {
+    const newBlog = {
+        title: "Hello World",
+        author: "Matti Meikäläinen",
+        url: "test.url",
+        likes: 3,
+    }
+
+    const newBlogObject = new Blog(newBlog)
+    await newBlogObject.save()
+
+    const response = await api.get('/api/blogs')
+    expect(response.body[6].title).toEqual("Hello World")
+    expect(response.body[6].author).toEqual("Matti Meikäläinen")
+    expect(response.body[6].author).toEqual("test.url")
+})
+
 afterAll(() => {
     console.log("You're my wonderwall")
     mongoose.connection.close()
