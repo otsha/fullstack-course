@@ -20,9 +20,15 @@ const postNew = async newBlog => {
   return res.data
 }
 
+const update = async blog => {
+  const config = { headers: { Authorization: token }}
+  const res = await axios.put(`${baseUrl}/${blog.id}`, blog, config)
+  return res.data
+}
+
 const login = async (credentials) => {
   const res = await axios.post('/api/login', credentials)
   return res.data
 }
 
-export default { getAll, login, postNew, setToken }
+export default { getAll, login, postNew, setToken, update }
