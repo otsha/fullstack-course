@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogs'
+import Toggleable from './Toggleable'
 
-const BlogForm = ({blogs, setBlogs, setNotification}) => {
+const BlogForm = ({ blogs, setBlogs, setNotification }) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
+
+    const blogFormRef = React.createRef()
 
     const postBlog = async (event) => {
         event.preventDefault()
@@ -15,6 +18,7 @@ const BlogForm = ({blogs, setBlogs, setNotification}) => {
             setTitle('')
             setAuthor('')
             setUrl('')
+            //blogFormRef.current.toggle()
             setTimeout(() => {
                 setNotification('')
             }, 4000)
@@ -28,16 +32,18 @@ const BlogForm = ({blogs, setBlogs, setNotification}) => {
     }
 
     return (
-        <form onSubmit={postBlog}>
-            <p>Title:</p>
-            <input type="text" value={title} onChange={({ target }) => setTitle(target.value)} />
-            <p>Author:</p>
-            <input type="text" value={author} onChange={({ target }) => setAuthor(target.value)} />
-            <p>URL:</p>
-            <input type="text" value={url} onChange={({ target }) => setUrl(target.value)} />
-            <br />
-            <button type="submit">submit</button>
-        </form>
+        <Toggleable label="new..." ref={blogFormRef}>
+            <form onSubmit={postBlog}>
+                <p>Title:</p>
+                <input type="text" value={title} onChange={({ target }) => setTitle(target.value)} />
+                <p>Author:</p>
+                <input type="text" value={author} onChange={({ target }) => setAuthor(target.value)} />
+                <p>URL:</p>
+                <input type="text" value={url} onChange={({ target }) => setUrl(target.value)} />
+                <br />
+                <button type="submit">submit</button>
+            </form>
+        </Toggleable>
     )
 }
 

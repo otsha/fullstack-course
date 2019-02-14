@@ -73,7 +73,7 @@ const App = () => {
       <div>
         <h2>Post new</h2>
 
-        <BlogForm blogs={blogs} setBlogs={setBlogs} setNotification={setNotification} />
+        <BlogForm blogs={blogs} setBlogs={setBlogs} setNotification={setNotification}/>
 
         <h2>blogs</h2>
         <p>{`logged in as ${user.username}`}</p>
@@ -89,7 +89,7 @@ const App = () => {
   return (
     <div>
       <div>
-      {`${notification}`}
+        {`${notification}`}
 
       </div>
       {user === null
