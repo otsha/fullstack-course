@@ -11,7 +11,12 @@ const middleware = require('./utils/middleware')
 
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
 
-app.use(cors())
+const corsOptions = {
+    'allowedHeaders': 'Content-Type, Authorization' 
+}
+
+app.use(cors(corsOptions))
+
 app.use(bodyParser.json())
 
 app.use(middleware.tokenExtractor)

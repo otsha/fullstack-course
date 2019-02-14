@@ -20,7 +20,7 @@ loginRouter.post('/', async (req, res, next) => {
                 id: user.id 
             }, process.env.SECRET)
 
-            res.status(200).send({ token, username: user.username, name: user.name })
+            res.status(200).send({ token, username: user.username, name: user.name, id: user.id })
         } else {
             res.status(404).json({ error: 'Invalid username' }).end()
         }

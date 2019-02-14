@@ -33,6 +33,10 @@ blogRouter.post('/', async (request, response, next) => {
 })
 
 blogRouter.delete('/:id', async (request, response, next) => {
+    console.log(request.params)
+    console.log(request.headers)
+    console.log(request.headers.authorization)
+
     try {
         const decoded = jwt.verify(request.token, process.env.SECRET)
         if (!request.token || !decoded.id) {
@@ -40,17 +44,16 @@ blogRouter.delete('/:id', async (request, response, next) => {
         }
 
         const blog = await Blog.findById(request.params.id)
-        const user = await User.findById(decoded.id)
 
-        if (blog.user.toString() === user.id.toString()) {
+        if (blog.user.toString() === decoded.id) {
             await Blog.findByIdAndDelete(request.params.id)
             response.status(204).end()
         } else {
-            response.status(401).json({ error: "Unauthorized" }).end()
+            response.status(401).json({ error: "Unauthorized: Only the creator of an entry can delete it" }).end()
         }
 
     } catch (exception) {
-        response.status(400)
+        response.status(400).json({ error: "Token must be provided"})
         next(exception)
     }
 })

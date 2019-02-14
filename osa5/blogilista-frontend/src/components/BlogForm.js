@@ -15,6 +15,7 @@ const BlogForm = ({ blogs, setBlogs, setNotification }) => {
             const newBlog = await blogService.postNew({ title: title, author: author, url: url })
             setNotification('New Blog Successfully added!')
             setBlogs(blogs.concat(newBlog))
+            console.log(blogs)
             setTitle('')
             setAuthor('')
             setUrl('')

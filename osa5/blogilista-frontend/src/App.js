@@ -19,7 +19,7 @@ const App = () => {
   useEffect(() => {
     const userJSON = window.localStorage.getItem('currentUser')
     const user = JSON.parse(userJSON)
-    if (user) {
+    if (user && user.token) {
       setUser(user)
       blogService.setToken(user.token)
     }
@@ -82,7 +82,7 @@ const App = () => {
         {blogs.sort((a, b) => {
           return (b.likes - a.likes)
         }).map(blog =>
-          <Blog key={blog.id} blog={blog} />
+          <Blog key={blog.id} blog={blog} currentUser={user} />
         )}
       </div>
     )
