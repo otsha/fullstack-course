@@ -52,9 +52,8 @@ const Blog = ({ blog, currentUser, blogs, setBlogs }) => {
       <div style={showWhenTrue}>
         <a href={blog.url}>{blog.url}</a>
         <p>{blog.likes} likes</p>
-        <button type="submit" onClick={handleLike}>Like this Blog!!!!!</button><br/>
-        {showDelete ? <button type="submit" onClick={handleDelete}>Delete</button> : ""}
-        
+        <button type="submit" onClick={handleLike}>Like this Blog!!!!!</button><br />
+        {showDelete ? <button type="submit" onClick={handleDelete}>Delete</button> : ''}
       </div>
     </div>
   )
