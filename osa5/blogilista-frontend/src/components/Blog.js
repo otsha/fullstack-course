@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, currentUser }) => {
+const Blog = ({ blog, currentUser, blogs, setBlogs }) => {
   const [show, setShow] = useState(false)
   const [showDelete, setShowDelete] = useState(false)
 
@@ -33,11 +33,12 @@ const Blog = ({ blog, currentUser }) => {
     }
   }
 
-  const handleDelete = (event) => {
+  const handleDelete = async (event) => {
     event.preventDefault()
     try {
       if (window.confirm(`Do you really wish to delete ${blog.title} by ${blog.author}?`)) {
-        blogService.remove(blog)
+        await blogService.remove(blog)
+        setBlogs(blogs.filter(b => b.id !== blog.id))
       }
     } catch (exception) {
       console.log(exception.message)
