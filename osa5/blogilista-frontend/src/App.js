@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
-import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
+import BlogForm from './components/BlogForm'
+import Toggleable from './components/Toggleable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -9,6 +10,9 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [notification, setNotification] = useState('')
   const [user, setUser] = useState(null)
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -44,6 +48,45 @@ const App = () => {
     }
   }
 
+  const postBlog = async (event) => {
+    event.preventDefault()
+    blogFormRef.current()
+
+    try {
+      const newBlog = await blogService.postNew({ title: title, author: author, url: url })
+      setNotification('New Blog Successfully added!')
+      setBlogs(blogs.concat(newBlog))
+      setTitle('')
+      setAuthor('')
+      setUrl('')
+      setTimeout(() => {
+        setNotification('')
+      }, 4000)
+    } catch (exception) {
+      console.log(exception.message)
+      setNotification('Something went wrong, please try again.')
+      setTimeout(() => {
+        setNotification('')
+      }, 4000)
+    }
+  }
+
+  const blogFormRef = React.createRef()
+
+  const blogForm = () => {
+    const values = {
+      title: title,
+      author: author,
+      url: url
+    }
+
+    return (
+      <Toggleable label='new...' ref={blogFormRef}>
+        <BlogForm action={postBlog} setTitle={setTitle} setAuthor={setAuthor} setUrl={setUrl} values={values} />
+      </Toggleable>
+    )
+  }
+
   const logout = (event) => {
     event.preventDefault()
     try {
@@ -73,7 +116,7 @@ const App = () => {
       <div>
         <h2>Post new</h2>
 
-        <BlogForm blogs={blogs} setBlogs={setBlogs} setNotification={setNotification}/>
+        {blogForm()}
 
         <h2>blogs</h2>
         <p>{`logged in as ${user.username}`}</p>

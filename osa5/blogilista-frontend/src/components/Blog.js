@@ -14,7 +14,8 @@ const Blog = ({ blog, currentUser, blogs, setBlogs }) => {
     width: '33%'
   }
 
-  const toggle = () => {
+  const toggle = async (event) => {
+    event.preventDefault()
     setShow(!show)
   }
 
