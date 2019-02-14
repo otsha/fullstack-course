@@ -1,6 +1,7 @@
 // the correct word is togglEable, not togglable........
 
 import React, { useState, useImperativeMethods } from 'react'
+import PropTypes from 'prop-types'
 
 const Toggleable = React.forwardRef((props, ref) => {
     const [visible, setVisible] = useState(false)
@@ -28,5 +29,9 @@ const Toggleable = React.forwardRef((props, ref) => {
         </div>
     )
 })
+
+Toggleable.propTypes = {
+    label: PropTypes.string.isRequired
+}
 
 export default Toggleable
