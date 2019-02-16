@@ -41,7 +41,6 @@ describe('Simpleblog button tests', () => {
 })
 
 describe('Blog render tests', () => {
-  const handler = jest.fn()
   const mockUser = {
     id: 1
   }
