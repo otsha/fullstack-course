@@ -41,8 +41,8 @@ const App = () => {
       setUser(user)
       blogService.setToken(user.token)
       window.localStorage.setItem('currentUser', JSON.stringify(user))
-      username.clear()
-      password.clear()
+      username.reset()
+      password.reset()
     } catch (exception) {
       setNotification('Invalid username or password!')
       console.log(exception.message)

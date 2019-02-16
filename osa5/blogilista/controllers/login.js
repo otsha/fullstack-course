@@ -4,6 +4,7 @@ const loginRouter = require('express').Router()
 const User = require('../models/user')
 
 loginRouter.post('/', async (req, res, next) => {
+    console.log('login request received')
     try {
         const user = await User.findOne({ username: req.body.username })
         if (user) {
@@ -25,6 +26,7 @@ loginRouter.post('/', async (req, res, next) => {
             res.status(404).json({ error: 'Invalid username' }).end()
         }
     } catch (exception) {
+        console.log(exception.message)
         res.status(500).json({ error: exception.message }).end()
     }
 })
