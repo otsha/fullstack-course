@@ -48,7 +48,7 @@ const Blog = ({ blog, currentUser, blogs, setBlogs }) => {
   }
 
   return (
-    <div style={style}>
+    <div style={style} className="blog">
       <div onClick={toggle} className="blogHeader">{blog.title} by {blog.author}</div>
       <div style={showWhenTrue} className="blogDetails">
         <a href={blog.url}>{blog.url}</a>
