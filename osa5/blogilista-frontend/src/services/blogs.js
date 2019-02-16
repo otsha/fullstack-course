@@ -33,7 +33,7 @@ const remove = async blog => {
 }
 
 const login = async (credentials) => {
-  const res = await axios.post('/api/login', credentials)
+  const res = await axios.post('http://localhost:3003/api/login', credentials)
   return res.data
 }
 
