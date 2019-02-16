@@ -11,10 +11,17 @@ export const useField = (type) => {
     setValue('')
   }
 
+  const spread = {
+    type,
+    value,
+    onChange
+  }
+
   return {
     type,
     value,
     onChange,
-    reset
+    reset,
+    spread
   }
 }

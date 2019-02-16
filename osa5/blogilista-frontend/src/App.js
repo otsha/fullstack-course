@@ -107,9 +107,9 @@ const App = () => {
       <form onSubmit={login}>
         <div>
           <p>Username:</p>
-          <input type={username.type} value={username.value} onChange={username.onChange} />
+          <input {...username.spread} />
           <p>Password:</p>
-          <input type={password.type} value={password.value} onChange={password.onChange} />
+          <input {...password.spread} />
           <button type='submit'>Login</button>
         </div>
       </form>
