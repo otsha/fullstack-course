@@ -1,0 +1,27 @@
+{
+  "notes": [
+    {
+      "content": "custom-hookit aivan mahtavia",
+      "id": 1
+    },
+    {
+      "content": "paras feature ikinä <3",
+      "id": 2
+    },
+    {
+      "content": "uusi note!!",
+      "id": 3
+    },
+    {
+      "content": "toinen uusi note!!!!",
+      "id": 4
+    }
+  ],
+  "persons": [
+    {
+      "name": "matti meikäläinen",
+      "number": "?????????",
+      "id": 1
+    }
+  ]
+}
