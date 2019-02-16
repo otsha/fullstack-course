@@ -1,11 +1,13 @@
 import React from 'react'
 import { render, fireEvent } from 'react-testing-library'
 import SimpleBlog from './SimpleBlog'
+import Blog from './Blog'
 
 const blog = {
   title: 'testtitle',
   author: 'testauthor',
-  likes: 5
+  likes: 5,
+  id: 1
 }
 
 describe('Simpleblog render tests', () => {
@@ -35,5 +37,32 @@ describe('Simpleblog button tests', () => {
     fireEvent.click(button)
     fireEvent.click(button)
     expect(handler.mock.calls.length).toBe(2)
+  })
+})
+
+describe('Blog render tests', () => {
+  const handler = jest.fn()
+  const mockUser = {
+    id: 1
+  }
+
+  test('by default only title and author are shown', () => {
+    const component = render(<Blog blog={blog} currentUser={mockUser} />)
+    const header = component.container.querySelector('.blogHeader')
+    const body = component.container.querySelector('.blogDetails')
+
+    expect(header).toHaveTextContent('testauthor')
+    expect(header).toHaveTextContent('testtitle')
+    expect(header).not.toHaveTextContent('Like this Blog!!!!!')
+    expect(body).toHaveStyle('display: none')
+  })
+
+  test('details can be made visible by clicking on the header', () => {
+    const component = render(<Blog blog={blog} currentUser={mockUser} />)
+    const header = component.container.querySelector('.blogHeader')
+    const body = component.container.querySelector('.blogDetails')
+
+    fireEvent.click(header)
+    expect(body).not.toHaveStyle('display: none')
   })
 })

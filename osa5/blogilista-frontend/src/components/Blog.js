@@ -49,8 +49,8 @@ const Blog = ({ blog, currentUser, blogs, setBlogs }) => {
 
   return (
     <div style={style}>
-      <div onClick={toggle}>{blog.title} by {blog.author}</div>
-      <div style={showWhenTrue}>
+      <div onClick={toggle} className="blogHeader">{blog.title} by {blog.author}</div>
+      <div style={showWhenTrue} className="blogDetails">
         <a href={blog.url}>{blog.url}</a>
         <p>{blog.likes} likes</p>
         <button type="submit" onClick={handleLike}>Like this Blog!!!!!</button><br />
