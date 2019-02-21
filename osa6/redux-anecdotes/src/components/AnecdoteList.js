@@ -7,6 +7,7 @@ const AnecdoteList = ({ store }) => {
     <div>
       <h2>Anecdotes</h2>
       {anecdotes
+        .filter(a => a.content.toLowerCase().includes(store.getState().filter.toLowerCase()))
         .sort((a, b) => b.votes - a.votes)
         .map(anecdote =>
           <div key={anecdote.id}>
