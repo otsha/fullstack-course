@@ -10,6 +10,15 @@ const App = (props) => {
       id: id
     })
   }
+
+  const postNew = (event) => {
+    event.preventDefault()
+    store.dispatch({
+      type: 'NEW',
+      content: event.target.anecdote.value
+    })
+    event.target.anecdote.value = ''
+  }
   
   return (
     <div>
@@ -26,9 +35,9 @@ const App = (props) => {
         </div>
       )}
       <h2>create new</h2>
-      <form>
-        <div><input /></div>
-        <button>create</button>
+      <form onSubmit={postNew}>
+        <div><input name="anecdote" /></div>
+        <button type="submit">create</button>
       </form>
     </div>
   )
