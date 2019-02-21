@@ -2,7 +2,7 @@ import React from 'react'
 import VoteButton from './VoteButton'
 
 const AnecdoteList = ({ store }) => {
-  const anecdotes = store.getState()
+  const anecdotes = store.getState().anecdotes
   return (
     <div>
       <h2>Anecdotes</h2>
