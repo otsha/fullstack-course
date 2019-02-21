@@ -15,7 +15,7 @@ const AnecdoteList = ({ store }) => {
             </div>
             <div>
               has {anecdote.votes}
-              <VoteButton id={anecdote.id} store={store} />
+              <VoteButton id={anecdote.id} content={anecdote.content} store={store} />
             </div>
           </div>
         )}
