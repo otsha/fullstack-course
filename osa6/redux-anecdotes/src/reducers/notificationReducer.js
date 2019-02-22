@@ -1,16 +1,17 @@
 const init = 'no notifications'
 
-export const showNotification = (message) => {
-  return {
-    type: 'SET',
-    message: message
-  }
-}
-
-export const clearNotification = () => {
-  return {
-    type: 'SET',
-    message: init
+export const showNotification = (message, timeOutLength) => {
+  return async dispatch => {
+    dispatch({
+      type: 'SET',
+      message: message
+    })
+    setTimeout(() => {
+      dispatch({
+        type: 'SET',
+        message: init
+      })
+    }, timeOutLength * 1000);
   }
 }
 

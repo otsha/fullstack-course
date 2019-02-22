@@ -1,16 +1,13 @@
 import React from 'react'
 import { vote } from '../reducers/anecdoteReducer'
-import { showNotification, clearNotification } from '../reducers/notificationReducer'
+import { showNotification } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 
-const VoteButton = ({ vote, showNotification, clearNotification, id, content }) => {
+const VoteButton = ({ vote, showNotification, id, content }) => {
 
     const voteAnecdote = (id) => {
         vote(id)
-        showNotification(`You voted for "${content}"`)
-        setTimeout(() => {
-            clearNotification()
-        }, 5000);
+        showNotification(`You voted for "${content}"`, 4)
     }
 
     return (
@@ -22,8 +19,7 @@ const VoteButton = ({ vote, showNotification, clearNotification, id, content }) 
 
 const mapDispatchToProps = {
     vote,
-    showNotification,
-    clearNotification
+    showNotification
 }
 
 export default connect(null, mapDispatchToProps)(VoteButton)
