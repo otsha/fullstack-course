@@ -7,17 +7,20 @@ export const vote = (id) => {
   }
 }
 
-export const postNew = (data) => {
-  return {
-    type: 'NEW',
-    data
+export const postNew = (content) => {
+  return async dispatch => {
+    const newAnecdote = await anecdoteService.postNew(content)
+    dispatch({
+      type: 'NEW',
+      data: newAnecdote
+    })
   }
 }
 
 export const initAnecdotes = () => {
   return async dispatch => {
     const anecdotes = await anecdoteService.getAll()
-    dispatch ({
+    dispatch({
       type: 'INIT',
       data: anecdotes
     })
