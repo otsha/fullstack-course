@@ -1,13 +1,3 @@
-const getId = () => (100000 * Math.random()).toFixed(0)
-
-const asObject = (anecdote) => {
-  return {
-    content: anecdote,
-    id: getId(),
-    votes: 0
-  }
-}
-
 export const vote = (id) => {
   return {
     type: 'VOTE',
@@ -15,10 +5,10 @@ export const vote = (id) => {
   }
 }
 
-export const postNew = (content) => {
+export const postNew = (data) => {
   return {
     type: 'NEW',
-    content: content
+    data
   }
 }
 
@@ -35,7 +25,7 @@ const reducer = (state = [], action) => {
 
   switch (action.type) {
     case 'NEW':
-      const newAnecdote = asObject(action.content)
+      const newAnecdote = action.data
       return state.concat(newAnecdote)
     case 'VOTE':
       const anecdoteToVote = state.find(a => a.id === action.id)

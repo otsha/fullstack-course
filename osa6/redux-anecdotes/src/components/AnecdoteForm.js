@@ -2,11 +2,15 @@ import React from 'react'
 import { postNew } from '../reducers/anecdoteReducer'
 import { showNotification, clearNotification } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
+import anecdoteService from '../services/anecdoteService'
 
 const AnecdoteForm = ({ postNew, showNotification, clearNotification }) => {
-    const newAnecdote = (event) => {
+    const newAnecdote = async (event) => {
         event.preventDefault()
-        postNew(event.target.anecdote.value)
+        event.persist()
+        const content = event.target.anecdote.value
+        const newAnecdote = await anecdoteService.postNew(content)
+        postNew(newAnecdote)
         event.target.anecdote.value = ''
         showNotification("Added a new anecdote!")
         setTimeout(() => {
