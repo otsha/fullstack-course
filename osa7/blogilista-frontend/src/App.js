@@ -6,12 +6,12 @@ import Toggleable from './components/Toggleable'
 import { useField } from './hooks'
 import { setNotification } from './reducers/notificationReducer'
 import { postBlog, initBlogs } from './reducers/blogReducer'
+import { userLogin, userLogout } from './reducers/userReducer'
 import { connect } from 'react-redux'
 
 const App = (props) => {
   const username = useField('text')
   const password = useField('password')
-  const [user, setUser] = useState(null)
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
@@ -28,8 +28,7 @@ const App = (props) => {
     const userJSON = window.localStorage.getItem('currentUser')
     const user = JSON.parse(userJSON)
     if (user && user.token) {
-      setUser(user)
-      blogService.setToken(user.token)
+      props.userLogin(user)
     }
   }, [])
 
@@ -39,8 +38,7 @@ const App = (props) => {
       const usernameAsString = username.value
       const passwordAsString = password.value
       const user = await blogService.login({ username: usernameAsString, password: passwordAsString })
-      setUser(user)
-      blogService.setToken(user.token)
+      props.userLogin(user)
       window.localStorage.setItem('currentUser', JSON.stringify(user))
       username.reset()
       password.reset()
@@ -86,7 +84,7 @@ const App = (props) => {
     event.preventDefault()
     try {
       window.localStorage.setItem('currentUser', null)
-      setUser(null)
+      props.userLogout()
     } catch (exception) {
       console.log(exception.message)
     }
@@ -114,13 +112,13 @@ const App = (props) => {
         {blogForm()}
 
         <h2>blogs</h2>
-        <p>{`logged in as ${user.username}`}</p>
+        <p>{`logged in as ${props.user.username}`}</p>
         <button type='submit' onClick={logout}>Logout</button>
 
         {props.blogs.sort((a, b) => {
           return (b.likes - a.likes)
         }).map(blog =>
-          <Blog key={blog.id} blog={blog} currentUser={user} />
+          <Blog key={blog.id} blog={blog} />
         )}
       </div>
     )
@@ -132,7 +130,7 @@ const App = (props) => {
         {`${props.notification}`}
 
       </div>
-      {user === null
+      {props.user === null
         ? loginform()
         : mainView()
       }
@@ -146,7 +144,8 @@ const mapStateToProps = (state) => {
   console.log(state.blogs)
   return {
     notification: state.notification,
-    blogs: state.blogs
+    blogs: state.blogs,
+    user: state.user
   }
 }
 
@@ -154,7 +153,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setNotification,
   postBlog,
-  initBlogs
+  initBlogs,
+  userLogin,
+  userLogout
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

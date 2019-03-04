@@ -61,12 +61,12 @@ const Blog = ({ deleteBlog, likeBlog, blog, currentUser }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  currentUser: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {
   return {
-    blogs: state.blogs
+    blogs: state.blogs,
+    currentUser: state.user
   }
 }
 
