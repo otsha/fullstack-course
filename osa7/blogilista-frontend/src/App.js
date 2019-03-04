@@ -5,26 +5,23 @@ import BlogForm from './components/BlogForm'
 import Toggleable from './components/Toggleable'
 import { useField } from './hooks'
 import { setNotification } from './reducers/notificationReducer'
+import { postBlog, initBlogs } from './reducers/blogReducer'
 import { connect } from 'react-redux'
 
 const App = (props) => {
-  const [blogs, setBlogs] = useState([])
   const username = useField('text')
   const password = useField('password')
-  const [notification, setNotification] = useState('')
   const [user, setUser] = useState(null)
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
   useEffect(() => {
-    setNotification(props.notification)
-  })
+    props.initBlogs()
+  }, [])
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(blogs)
-    )
+    setNotification(props.notification)
   }, [])
 
   useEffect(() => {
@@ -34,7 +31,7 @@ const App = (props) => {
       setUser(user)
       blogService.setToken(user.token)
     }
-  })
+  }, [])
 
   const login = async (event) => {
     event.preventDefault()
@@ -58,9 +55,8 @@ const App = (props) => {
     blogFormRef.current()
 
     try {
-      const newBlog = await blogService.postNew({ title: title, author: author, url: url })
+      props.postBlog({ title: title, author: author, url: url })
       props.setNotification('New Blog Successfully added!')
-      setBlogs(blogs.concat(newBlog))
       setTitle('')
       setAuthor('')
       setUrl('')
@@ -121,10 +117,10 @@ const App = (props) => {
         <p>{`logged in as ${user.username}`}</p>
         <button type='submit' onClick={logout}>Logout</button>
 
-        {blogs.sort((a, b) => {
+        {props.blogs.sort((a, b) => {
           return (b.likes - a.likes)
         }).map(blog =>
-          <Blog key={blog.id} blog={blog} currentUser={user} blogs={blogs} setBlogs={setBlogs} />
+          <Blog key={blog.id} blog={blog} currentUser={user} />
         )}
       </div>
     )
@@ -133,7 +129,7 @@ const App = (props) => {
   return (
     <div>
       <div>
-        {`${notification}`}
+        {`${props.notification}`}
 
       </div>
       {user === null
@@ -146,14 +142,19 @@ const App = (props) => {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.notification)
+  console.log(state.blogs)
   return {
-    notification: state
+    notification: state.notification,
+    blogs: state.blogs
   }
 }
 
 
 const mapDispatchToProps = {
-  setNotification
+  setNotification,
+  postBlog,
+  initBlogs
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import blogService from '../services/blogs'
 import PropTypes from 'prop-types'
+import { deleteBlog, likeBlog } from '../reducers/blogReducer'
+import { connect } from 'react-redux'
 
-const Blog = ({ blog, currentUser, blogs, setBlogs }) => {
+const Blog = ({ deleteBlog, likeBlog, blog, currentUser }) => {
   const [show, setShow] = useState(false)
   const [showDelete, setShowDelete] = useState(false)
 
@@ -20,16 +21,15 @@ const Blog = ({ blog, currentUser, blogs, setBlogs }) => {
   }
 
   useEffect(() => {
-    if (currentUser.id === blog.user) {
+    if (currentUser.id === blog.user.id) {
       setShowDelete(true)
     }
-  })
+  }, [])
 
   const handleLike = (event) => {
     event.preventDefault()
     try {
-      blog.likes = blog.likes + 1
-      blogService.update(blog)
+      likeBlog(blog)
     } catch (exception) {
       console.log(exception.message)
     }
@@ -39,8 +39,7 @@ const Blog = ({ blog, currentUser, blogs, setBlogs }) => {
     event.preventDefault()
     try {
       if (window.confirm(`Do you really wish to delete ${blog.title} by ${blog.author}?`)) {
-        await blogService.remove(blog)
-        setBlogs(blogs.filter(b => b.id !== blog.id))
+        deleteBlog(blog)
       }
     } catch (exception) {
       console.log(exception.message)
@@ -62,9 +61,18 @@ const Blog = ({ blog, currentUser, blogs, setBlogs }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  currentUser: PropTypes.object.isRequired,
-  blogs: PropTypes.array.isRequired,
-  setBlogs: PropTypes.func.isRequired
+  currentUser: PropTypes.object.isRequired
 }
 
-export default Blog
+const mapStateToProps = (state) => {
+  return {
+    blogs: state.blogs
+  }
+}
+
+const mapDispatchToProps = {
+  deleteBlog,
+  likeBlog
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Blog)
