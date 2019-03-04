@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { initUsers } from '../reducers/userReducer'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import User from './User';
+import User from './User'
 
 const UserList = (props) => {
   useEffect(() => {

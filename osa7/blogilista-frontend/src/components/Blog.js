@@ -1,24 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
 import { deleteBlog, likeBlog } from '../reducers/blogReducer'
 import { connect } from 'react-redux'
 
-const Blog = ({ deleteBlog, likeBlog, blog, currentUser }) => {
-  const [show, setShow] = useState(false)
+const Blog = ({ deleteBlog, likeBlog, blog, currentUser, users }) => {
+  if (blog === undefined) {
+    return null
+  }
+
   const [showDelete, setShowDelete] = useState(false)
-
-  const showWhenTrue = { display: show ? '' : 'none' }
-  const style = {
-    border: 'solid',
-    margin: '5px',
-    padding: '5px',
-    width: '33%'
-  }
-
-  const toggle = async (event) => {
-    event.preventDefault()
-    setShow(!show)
-  }
 
   useEffect(() => {
     if (currentUser.id === blog.user.id) {
@@ -47,9 +36,9 @@ const Blog = ({ deleteBlog, likeBlog, blog, currentUser }) => {
   }
 
   return (
-    <div style={style} className="blog">
-      <div onClick={toggle} className="blogHeader">{blog.title} by {blog.author}</div>
-      <div style={showWhenTrue} className="blogDetails">
+    <div className="blog">
+      <h1 className="blogHeader">{blog.title} by {blog.author}</h1>
+      <div className="blogDetails">
         <a href={blog.url}>{blog.url}</a>
         <p>{blog.likes} likes</p>
         <button type="submit" onClick={handleLike}>Like this Blog!!!!!</button><br />
@@ -59,14 +48,11 @@ const Blog = ({ deleteBlog, likeBlog, blog, currentUser }) => {
   )
 }
 
-Blog.propTypes = {
-  blog: PropTypes.object.isRequired,
-}
-
 const mapStateToProps = (state) => {
   return {
     blogs: state.blogs,
-    currentUser: state.user
+    currentUser: state.user,
+    users: state.allUsers
   }
 }
 

@@ -108,6 +108,13 @@ const App = (props) => {
 
 
   const blogList = () => {
+    const style = {
+      border: 'solid',
+      margin: '5px',
+      padding: '5px',
+      width: '33%'
+    }
+
     return (
       <div>
         <h2>Post new</h2>
@@ -118,13 +125,17 @@ const App = (props) => {
 
         {props.blogs.sort((a, b) => {
           return (b.likes - a.likes)
-        }).map(blog => <Blog key={blog.id} blog={blog} />)
+        }).map(blog => <div style={style} key={blog.id}><Link to={`/api/blogs/${blog.id}`} >{`"${blog.title}" by ${blog.author}`}</Link></div>)
         }
       </div>
     )
   }
 
   const mainView = () => {
+    const findOneBlog = (id) => {
+      return props.blogs.find(b => b.id === id)
+    }
+
     return (
       <div>
         <Router>
@@ -135,6 +146,7 @@ const App = (props) => {
             <button type='submit' onClick={logout}>Logout</button>
             <Route exact path='/' render={() => blogList()} />
             <Route path='/api/users' render={() => <UserList />} />
+            <Route exact path='/api/blogs/:id' render={({ match }) => <Blog blog={findOneBlog(match.params.id)} />} />
           </div>
         </Router>
       </div>
