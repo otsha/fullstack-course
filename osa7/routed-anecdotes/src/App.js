@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
+import { SSL_OP_SINGLE_DH_USE } from 'constants';
 
 const Menu = () => {
   const padding = {
@@ -62,7 +63,6 @@ const CreateNew = (props) => {
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
 
-
   const handleSubmit = (e) => {
     e.preventDefault()
     props.addNew({
@@ -71,6 +71,7 @@ const CreateNew = (props) => {
       info,
       votes: 0
     })
+    props.history.push('/')
   }
 
   return (
@@ -96,6 +97,8 @@ const CreateNew = (props) => {
 
 }
 
+const Create = withRouter(CreateNew)
+
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
     {
@@ -119,6 +122,10 @@ const App = () => {
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
+    setNotification(`Anecdote "${anecdote.content}" was added!`)
+    setTimeout(() => {
+      setNotification('')
+    }, 10000)
   }
 
   const anecdoteById = (id) =>
@@ -141,14 +148,15 @@ const App = () => {
       <Router>
         <div>
           <Menu />
+          <p style={notification !== '' ? { border: 'solid', borderWidth: '5px', width: '25%' } : { display: 'none' }}>{notification}</p>
           <Route exact path="/" render={() =>
             <AnecdoteList anecdotes={anecdotes} />
           } />
-          <Route exact path="/anecdotes/:id" render={({match}) =>
-            <Anecdote anecdote={anecdoteById(match.params.id)}/>
+          <Route exact path="/anecdotes/:id" render={({ match }) =>
+            <Anecdote anecdote={anecdoteById(match.params.id)} />
           } />
           <Route path="/create" render={() =>
-            <CreateNew addNew={addNew} />
+            <Create addNew={addNew} />
           } />
           <Route path="/about" render={() =>
             <About />
