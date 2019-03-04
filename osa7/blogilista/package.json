@@ -1,0 +1,31 @@
+{
+  "name": "blogilista",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=production node index.js",
+    "watch": "NODE_ENV=development nodemon index.js",
+    "test": "NODE_ENV=test jest --verbose --runInBand"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^24.1.0",
+    "nodemon": "^1.18.9",
+    "supertest": "^3.4.2"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.4",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.4.10",
+    "mongoose-unique-validator": "^2.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
