@@ -131,6 +131,42 @@ const App = (props) => {
     )
   }
 
+  const navBar = () => {
+    const navBarStyle = {
+      display: 'flex',
+      padding: '5px',
+      backgroundColor: '#d5d5d5',
+      borderRadius: '5px',
+      borderStyle: 'solid',
+      borderWidth: '4px',
+      borderColor: '#a2a2a2'
+    }
+
+    const navItemStyle = {
+      backgroundColor: '#f2f2f2',
+      padding: '10px',
+      margin: '10px',
+      borderRadius: '5px'
+    }
+
+    return (
+      <div style={navBarStyle}>
+        <div style={navItemStyle}>
+          <Link to='/'>Home</Link>
+        </div>
+        <div style={navItemStyle}>
+          <Link to='/api/users'>All users</Link>
+        </div>
+        <div style={navItemStyle}>
+          {`logged in as ${props.user.username}`}
+        </div>
+        <div style={navItemStyle}>
+          <button type='submit' onClick={logout}>Logout</button>
+        </div>
+      </div>
+    )
+  }
+
   const mainView = () => {
     const findOneBlog = (id) => {
       return props.blogs.find(b => b.id === id)
@@ -140,10 +176,7 @@ const App = (props) => {
       <div>
         <Router>
           <div>
-            <Link to='/'>Home</Link>
-            <Link to='/api/users'>All users</Link>
-            <p>{`logged in as ${props.user.username}`}</p>
-            <button type='submit' onClick={logout}>Logout</button>
+            {navBar()}
             <Route exact path='/' render={() => blogList()} />
             <Route path='/api/users' render={() => <UserList />} />
             <Route exact path='/api/blogs/:id' render={({ match }) => <Blog blog={findOneBlog(match.params.id)} />} />
