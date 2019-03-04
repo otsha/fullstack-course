@@ -6,8 +6,10 @@ import Toggleable from './components/Toggleable'
 import { useField } from './hooks'
 import { setNotification } from './reducers/notificationReducer'
 import { postBlog, initBlogs } from './reducers/blogReducer'
-import { userLogin, userLogout } from './reducers/userReducer'
+import { userLogin, userLogout } from './reducers/currentUserReducer'
 import { connect } from 'react-redux'
+import UserList from './components/UserList'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 const App = (props) => {
   const username = useField('text')
@@ -104,7 +106,8 @@ const App = (props) => {
     )
   }
 
-  const mainView = () => {
+
+  const blogList = () => {
     return (
       <div>
         <h2>Post new</h2>
@@ -112,14 +115,28 @@ const App = (props) => {
         {blogForm()}
 
         <h2>blogs</h2>
-        <p>{`logged in as ${props.user.username}`}</p>
-        <button type='submit' onClick={logout}>Logout</button>
 
         {props.blogs.sort((a, b) => {
           return (b.likes - a.likes)
-        }).map(blog =>
-          <Blog key={blog.id} blog={blog} />
-        )}
+        }).map(blog => <Blog key={blog.id} blog={blog} />)
+        }
+      </div>
+    )
+  }
+
+  const mainView = () => {
+    return (
+      <div>
+        <Router>
+          <div>
+            <Link to='/'>Home</Link>
+            <Link to='/api/users'>All users</Link>
+            <p>{`logged in as ${props.user.username}`}</p>
+            <button type='submit' onClick={logout}>Logout</button>
+            <Route exact path='/' render={() => blogList()} />
+            <Route path='/api/users' render={() => <UserList />} />
+          </div>
+        </Router>
       </div>
     )
   }

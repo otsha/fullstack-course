@@ -37,4 +37,9 @@ const login = async (credentials) => {
   return res.data
 }
 
-export default { getAll, login, postNew, setToken, update, remove }
+const getAllUsers = async () => {
+  const req = axios.get('http://localhost:3003/api/users')
+  return req.then(res => res.data)
+}
+
+export default { getAll, getAllUsers, login, postNew, setToken, update, remove }
