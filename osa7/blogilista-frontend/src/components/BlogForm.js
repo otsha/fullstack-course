@@ -1,18 +1,24 @@
 import React from 'react'
+import { Button, Input, Form } from 'semantic-ui-react'
 
 const BlogForm = ({ action, setTitle, setAuthor, setUrl, values }) => {
 
   return (
-    <form onSubmit={action}>
-      <p>Title:</p>
-      <input type="text" value={values.title} onChange={({ target }) => setTitle(target.value)} />
-      <p>Author:</p>
-      <input type="text" value={values.author} onChange={({ target }) => setAuthor(target.value)} />
-      <p>URL:</p>
-      <input type="text" value={values.url} onChange={({ target }) => setUrl(target.value)} />
-      <br />
-      <button type="submit">submit</button>
-    </form>
+    <Form onSubmit={action}>
+      <Form.Field>
+        <label>Title:</label>
+        <Input type="text" value={values.title} onChange={({ target }) => setTitle(target.value)} />
+      </Form.Field>
+      <Form.Field>
+        <label>Author:</label>
+        <Input type="text" value={values.author} onChange={({ target }) => setAuthor(target.value)} />
+      </Form.Field>
+      <Form.Field>
+        <label>URL:</label>
+        <Input type="text" value={values.url} onChange={({ target }) => setUrl(target.value)} />
+      </Form.Field>
+      <Button color='blue' type="submit">submit</Button>
+    </Form>
   )
 }
 

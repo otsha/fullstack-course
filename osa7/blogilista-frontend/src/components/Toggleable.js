@@ -2,6 +2,7 @@
 
 import React, { useState, useImperativeMethods } from 'react'
 import PropTypes from 'prop-types'
+import { Button, Icon } from 'semantic-ui-react'
 
 const Toggleable = React.forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false)
@@ -20,11 +21,16 @@ const Toggleable = React.forwardRef((props, ref) => {
   return (
     <div>
       <div style={hideWhenTrue}>
-        <button onClick={toggle}>{props.label}</button>
+        <Button animated='vertical' onClick={toggle}>
+          <Button.Content visible>{props.label}</Button.Content>
+          <Button.Content hidden>
+            <Icon name='pencil' />
+          </Button.Content>
+        </Button>
       </div>
       <div style={showWhenTrue}>
         {props.children}
-        <button onClick={toggle}>Hide</button>
+        <Button onClick={toggle}>Hide</Button>
       </div>
     </div>
   )

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { setNotification } from '../reducers/notificationReducer'
 import { commentBlog, initBlogs } from '../reducers/blogReducer'
 import { connect } from 'react-redux'
+import { Button, Input, Form } from 'semantic-ui-react'
 
 const Comments = ({ setNotification, commentBlog, blog }) => {
   const [content, setContent] = useState('')
@@ -21,10 +22,13 @@ const Comments = ({ setNotification, commentBlog, blog }) => {
   return (
     <div>
       <h2>Comments</h2>
-      <form onSubmit={handleNewComment}>
-        <input type='text' value={content} onChange={({ target }) => setContent(target.value)} />
-        <button type='submit'>Send</button>
-      </form>
+      <Form onSubmit={handleNewComment}>
+        <Form.Field>
+          <label>Post a comment...</label>
+          <Input type='text' value={content} onChange={({ target }) => setContent(target.value)} />
+          <Button type='submit'>Send</Button>
+        </Form.Field>
+      </Form>
       <ul>
         {blog.comments.map(c => <li key={c.id}>{c.content}</li>)}
       </ul>

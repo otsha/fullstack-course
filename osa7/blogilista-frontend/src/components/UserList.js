@@ -3,6 +3,7 @@ import { initUsers } from '../reducers/userReducer'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import User from './User'
+import { Table } from 'semantic-ui-react'
 
 const UserList = (props) => {
   useEffect(() => {
@@ -18,20 +19,22 @@ const UserList = (props) => {
       <h1>Users</h1>
       <Router>
         <div>
-          <table>
-            <tbody>
-              <tr>
-                <th>Username</th>
-                <th># of posts</th>
-              </tr>
+          <Table celled striped>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Username</Table.HeaderCell>
+                <Table.HeaderCell># of posts</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
               {props.users.map(u =>
-                <tr key={u.id}>
-                  <td><Link to={`/api/users/${u.id}`}>{u.username}</Link></td>
-                  <td>{u.blogs.length}</td>
-                </tr>
+                <Table.Row key={u.id}>
+                  <Table.Cell><Link to={`/api/users/${u.id}`}>{u.username}</Link></Table.Cell>
+                  <Table.Cell>{u.blogs.length}</Table.Cell>
+                </Table.Row>
               )}
-            </tbody>
-          </table>
+            </Table.Body>
+          </Table>
           <Route exact path='/api/users/:id' render={({ match }) => <User user={findOneUser(match.params.id)} />} />
         </div>
       </Router>

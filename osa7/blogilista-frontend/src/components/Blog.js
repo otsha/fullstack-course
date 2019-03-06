@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { deleteBlog, likeBlog } from '../reducers/blogReducer'
 import { connect } from 'react-redux'
 import Comments from './Comments'
+import { Button, Icon, Label, Segment } from 'semantic-ui-react'
 
 const Blog = ({ deleteBlog, likeBlog, blog, currentUser }) => {
   if (blog === undefined) {
@@ -11,7 +12,7 @@ const Blog = ({ deleteBlog, likeBlog, blog, currentUser }) => {
   const [showDelete, setShowDelete] = useState(false)
 
   useEffect(() => {
-    if (currentUser.id === blog.user.id) {
+    if (currentUser.id === blog.user) {
       setShowDelete(true)
     }
   }, [])
@@ -38,14 +39,27 @@ const Blog = ({ deleteBlog, likeBlog, blog, currentUser }) => {
 
   return (
     <div className="blog">
-      <h1 className="blogHeader">{blog.title} by {blog.author}</h1>
-      <div className="blogDetails">
-        <a href={blog.url}>{blog.url}</a>
-        <p>{blog.likes} likes</p>
-        <button type="submit" onClick={handleLike}>Like this Blog!!!!!</button><br />
-        {showDelete ? <button type="submit" onClick={handleDelete}>Delete</button> : ''}
+      <Segment>
+        <h1 className="blogHeader">{blog.title} by {blog.author}</h1>
+        <div className="blogDetails">
+          <p><a href={blog.url}>{blog.url}</a></p>
+          {showDelete ? <Button color='red' onClick={handleDelete}><Icon name='delete' />Delete</Button> : ''}
+        </div>
+      </Segment>
+      <div>
+        <Button as='div' labelPosition='right' onClick={handleLike}>
+          <Button color='red'>
+            <Icon name='heart' />
+            Like!
+          </Button>
+          <Label basic color='red' pointing='left'>
+            {blog.likes}
+          </Label>
+        </Button>
       </div>
-      <Comments blog={blog} />
+      <Segment>
+        <Comments blog={blog} />
+      </Segment>
     </div>
   )
 }

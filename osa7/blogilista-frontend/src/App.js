@@ -10,6 +10,7 @@ import { userLogin, userLogout } from './reducers/currentUserReducer'
 import { connect } from 'react-redux'
 import UserList from './components/UserList'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { Container, List, Message, Menu, Icon, Form, Input, Button } from 'semantic-ui-react'
 
 const App = (props) => {
   const username = useField('text')
@@ -76,7 +77,7 @@ const App = (props) => {
     }
 
     return (
-      <Toggleable label='new...' ref={blogFormRef}>
+      <Toggleable label='New...' ref={blogFormRef}>
         <BlogForm action={postBlog} setTitle={setTitle} setAuthor={setAuthor} setUrl={setUrl} values={values} />
       </Toggleable>
     )
@@ -94,76 +95,71 @@ const App = (props) => {
 
   const loginform = () => {
     return (
-      <form onSubmit={login}>
-        <div>
-          <p>Username:</p>
-          <input {...username.spread} />
-          <p>Password:</p>
-          <input {...password.spread} />
-          <button type='submit'>Login</button>
-        </div>
-      </form>
+      <Form onSubmit={login}>
+        <Form.Field>
+          <label>Username:</label>
+          <Input {...username.spread} />
+        </Form.Field>
+        <Form.Field>
+          <label>Password:</label>
+          <Input {...password.spread} />
+        </Form.Field>
+        <Button type='submit'><Icon name='privacy'/>Login</Button>
+      </Form>
     )
   }
 
-
   const blogList = () => {
-    const style = {
-      border: 'solid',
-      margin: '5px',
-      padding: '5px',
-      width: '33%'
-    }
-
     return (
       <div>
         <h2>Post new</h2>
 
         {blogForm()}
 
-        <h2>blogs</h2>
-
-        {props.blogs.sort((a, b) => {
-          return (b.likes - a.likes)
-        }).map(blog => <div style={style} key={blog.id}><Link to={`/api/blogs/${blog.id}`} >{`"${blog.title}" by ${blog.author}`}</Link></div>)
-        }
+        <h2>Blogs</h2>
+        <List divided relaxed>
+          {props.blogs.sort((a, b) => {
+            return (b.likes - a.likes)
+          }).map(blog =>
+            <List.Item key={blog.id}>
+              <List.Icon name='newspaper outline' size='large' verticalAlign='middle' />
+              <List.Content>
+                <List.Header>
+                  <Link to={`/api/blogs/${blog.id}`} >{`"${blog.title}" by ${blog.author}`}</Link>
+                </List.Header>
+              </List.Content>
+            </List.Item>)
+          }
+        </List>
       </div>
     )
   }
 
   const navBar = () => {
-    const navBarStyle = {
-      display: 'flex',
-      padding: '5px',
-      backgroundColor: '#d5d5d5',
-      borderRadius: '5px',
-      borderStyle: 'solid',
-      borderWidth: '4px',
-      borderColor: '#a2a2a2'
-    }
-
-    const navItemStyle = {
-      backgroundColor: '#f2f2f2',
-      padding: '10px',
-      margin: '10px',
-      borderRadius: '5px'
-    }
-
     return (
-      <div style={navBarStyle}>
-        <div style={navItemStyle}>
-          <Link to='/'>Home</Link>
-        </div>
-        <div style={navItemStyle}>
-          <Link to='/api/users'>All users</Link>
-        </div>
-        <div style={navItemStyle}>
-          {`logged in as ${props.user.username}`}
-        </div>
-        <div style={navItemStyle}>
-          <button type='submit' onClick={logout}>Logout</button>
-        </div>
-      </div>
+      <Menu>
+        <Link to='/'>
+          <Menu.Item>
+            <Icon name='home' />
+            Home
+          </Menu.Item>
+        </Link>
+        <Link to='/api/users'>
+          <Menu.Item>
+            <Icon name='users' />
+            All users
+          </Menu.Item>
+        </Link>
+        <Menu.Menu position='right'>
+          <Menu.Item>
+            {`logged in as ${props.user.username}`}
+          </Menu.Item>
+          <Menu.Item onClick={logout}>
+            <Icon name='log out' />
+            Logout
+          </Menu.Item>
+        </Menu.Menu>
+      </Menu>
     )
   }
 
@@ -187,17 +183,22 @@ const App = (props) => {
   }
 
   return (
-    <div>
+    <Container>
       <div>
-        {`${props.notification}`}
+        {props.notification
+          ?
+          <Message color='blue'>
+            {`${props.notification}`}
+          </Message>
+          : null
+        }
+        {props.user === null
+          ? loginform()
+          : mainView()
+        }
 
       </div>
-      {props.user === null
-        ? loginform()
-        : mainView()
-      }
-
-    </div>
+    </Container>
   )
 }
 
