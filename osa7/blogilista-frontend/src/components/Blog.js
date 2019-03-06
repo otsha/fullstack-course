@@ -44,6 +44,12 @@ const Blog = ({ deleteBlog, likeBlog, blog, currentUser, users }) => {
         <button type="submit" onClick={handleLike}>Like this Blog!!!!!</button><br />
         {showDelete ? <button type="submit" onClick={handleDelete}>Delete</button> : ''}
       </div>
+      <div>
+        <h2>Comments</h2>
+        <ul>
+          {blog.comments.map(c => <li key={c.id}>{c.content}</li>)}
+        </ul>
+      </div>
     </div>
   )
 }

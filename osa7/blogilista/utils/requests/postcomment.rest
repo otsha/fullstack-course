@@ -1,0 +1,7 @@
+POST http://localhost:3003/api/blogs/5c65583171ecaa3f6c39dba2/comments/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRFU1RFUjMiLCJpZCI6IjVjNWM1ZDBlMzgzMTlmM2VmMTg3YzJkZiIsImlhdCI6MTU1MTg2NTgwMX0.LZa31_cNYnkUs16OJxKwzBqAZm8uzYT8UtFzZUbRf8Q
+
+{
+    "content": "Toka kommentti!"
+}
