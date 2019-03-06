@@ -42,6 +42,19 @@ export const likeBlog = (blog) => {
   }
 }
 
+export const commentBlog = (comment) => {
+  return async dispatch => {
+    const sentComment = await blogService.postComment(comment)
+    console.log(sentComment)
+    const blogs = await blogService.getAll()
+    console.log(blogs)
+    dispatch({
+      type: 'INITBLOGS',
+      data: blogs
+    })
+  }
+}
+
 const reducer = (state = [], action) => {
   switch (action.type) {
     case 'NEWBLOG':

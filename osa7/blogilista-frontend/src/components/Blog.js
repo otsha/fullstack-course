@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { deleteBlog, likeBlog } from '../reducers/blogReducer'
 import { connect } from 'react-redux'
+import Comments from './Comments'
 
-const Blog = ({ deleteBlog, likeBlog, blog, currentUser, users }) => {
+const Blog = ({ deleteBlog, likeBlog, blog, currentUser }) => {
   if (blog === undefined) {
     return null
   }
@@ -44,12 +45,7 @@ const Blog = ({ deleteBlog, likeBlog, blog, currentUser, users }) => {
         <button type="submit" onClick={handleLike}>Like this Blog!!!!!</button><br />
         {showDelete ? <button type="submit" onClick={handleDelete}>Delete</button> : ''}
       </div>
-      <div>
-        <h2>Comments</h2>
-        <ul>
-          {blog.comments.map(c => <li key={c.id}>{c.content}</li>)}
-        </ul>
-      </div>
+      <Comments blog={blog} />
     </div>
   )
 }

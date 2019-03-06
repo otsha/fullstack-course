@@ -61,12 +61,13 @@ blogRouter.delete('/:id', async (request, response, next) => {
 })
 
 blogRouter.put('/:id', async (request, response, next) => {
+    console.log('Request update')
+    console.log(request.body.comments)
     const blog = {
         title: request.body.title,
         author: request.body.author,
         url: request.body.url,
         likes: request.body.likes,
-        comments: request.body.comments
     }
 
     try {

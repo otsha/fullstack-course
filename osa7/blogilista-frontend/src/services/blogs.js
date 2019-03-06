@@ -42,4 +42,10 @@ const getAllUsers = async () => {
   return req.then(res => res.data)
 }
 
-export default { getAll, getAllUsers, login, postNew, setToken, update, remove }
+const postComment = async newComment => {
+  const config = { headers: { Authorization: token } }
+  const res = await axios.post(`${baseUrl}/${newComment.blog.id}/comments`, newComment, config)
+  return res.data
+}
+
+export default { getAll, getAllUsers, login, postNew, postComment, setToken, update, remove }
