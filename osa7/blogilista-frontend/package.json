@@ -19,7 +19,8 @@
     "build": "webpack --mode=development",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,6 +39,7 @@
     "babel-loader": "^8.0.5",
     "babel-polyfill": "^6.26.0",
     "css-loader": "^2.1.0",
+    "cypress": "^3.1.5",
     "eslint-plugin-jest": "^22.2.2",
     "jest-dom": "^3.1.2",
     "react-testing-library": "^5.8.0",

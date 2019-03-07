@@ -10,7 +10,7 @@ import { userLogin, userLogout } from './reducers/currentUserReducer'
 import { connect } from 'react-redux'
 import UserList from './components/UserList'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import { Container, List, Message, Menu, Icon, Form, Input, Button } from 'semantic-ui-react'
+import { Container, List, Message, Menu, Icon, Form, Input, Button, Segment } from 'semantic-ui-react'
 
 const App = (props) => {
   const username = useField('text')
@@ -95,17 +95,20 @@ const App = (props) => {
 
   const loginform = () => {
     return (
-      <Form onSubmit={login}>
-        <Form.Field>
-          <label>Username:</label>
-          <Input {...username.spread} />
-        </Form.Field>
-        <Form.Field>
-          <label>Password:</label>
-          <Input {...password.spread} />
-        </Form.Field>
-        <Button type='submit'><Icon name='privacy'/>Login</Button>
-      </Form>
+      <Segment>
+        <h1>Bloglist</h1>
+        <Form onSubmit={login}>
+          <Form.Field>
+            <label>Username:</label>
+            <Input {...username.spread} />
+          </Form.Field>
+          <Form.Field>
+            <label>Password:</label>
+            <Input {...password.spread} />
+          </Form.Field>
+          <Button type='submit'><Icon name='privacy' />Login</Button>
+        </Form>
+      </Segment>
     )
   }
 
