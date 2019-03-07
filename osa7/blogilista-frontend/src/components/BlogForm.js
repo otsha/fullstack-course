@@ -7,15 +7,15 @@ const BlogForm = ({ action, setTitle, setAuthor, setUrl, values }) => {
     <Form onSubmit={action}>
       <Form.Field>
         <label>Title:</label>
-        <Input type="text" value={values.title} onChange={({ target }) => setTitle(target.value)} />
+        <Input id='title' type="text" value={values.title} onChange={({ target }) => setTitle(target.value)} />
       </Form.Field>
       <Form.Field>
         <label>Author:</label>
-        <Input type="text" value={values.author} onChange={({ target }) => setAuthor(target.value)} />
+        <Input id='author' type="text" value={values.author} onChange={({ target }) => setAuthor(target.value)} />
       </Form.Field>
       <Form.Field>
         <label>URL:</label>
-        <Input type="text" value={values.url} onChange={({ target }) => setUrl(target.value)} />
+        <Input id='url' type="text" value={values.url} onChange={({ target }) => setUrl(target.value)} />
       </Form.Field>
       <Button color='blue' type="submit">submit</Button>
     </Form>

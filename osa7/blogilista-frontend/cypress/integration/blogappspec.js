@@ -1,10 +1,18 @@
+const testUser = {
+  username: 'TESTUSER',
+  password: 'TESTPASSWORD',
+  name: 'tester'
+}
+
+// Reset the database and create a test user before each test
+beforeEach(() => {
+  cy.clearLocalStorage()
+  cy.request('POST', 'http://localhost:3003/api/testing/reset')
+  cy.request('POST', 'http://localhost:3003/api/users/', testUser)
+  cy.visit('http://localhost:3000')
+})
 
 describe('Before logging in', () => {
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.visit('http://localhost:3000')
-  })
-
   it('Site can be viewed', () => {
     cy.contains('Bloglist')
   })
@@ -18,10 +26,8 @@ describe('Before logging in', () => {
 
 describe('After logging in', () => {
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.visit('http://localhost:3000')
-    cy.get('input:first').type('TESTER3')
-    cy.get('input:last').type('joulupukki')
+    cy.get('input:first').type(testUser.username)
+    cy.get('input:last').type(testUser.password)
     cy.contains('Login').click()
   })
 
@@ -32,5 +38,14 @@ describe('After logging in', () => {
   it('User can log out', () => {
     cy.contains('Logout').click()
     cy.contains('Bloglist')
+  })
+
+  it('User can post a new blog', () => {
+    cy.contains('New...').click()
+    cy.get('#title').type('TESTBLOG')
+    cy.get('#author').type('TESTAUTHOR')
+    cy.get('#url').type('TEST.URL')
+    cy.contains('submit').click()
+    cy.contains('"TESTBLOG" by TESTAUTHOR')
   })
 })
