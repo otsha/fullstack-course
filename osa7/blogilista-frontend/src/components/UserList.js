@@ -29,7 +29,7 @@ const UserList = (props) => {
             <Table.Body>
               {props.users.map(u =>
                 <Table.Row key={u.id}>
-                  <Table.Cell><Link to={`/api/users/${u.id}`}>{u.username}</Link></Table.Cell>
+                  <Table.Cell><Link id={u.username} to={`/api/users/${u.id}`}>{u.username}</Link></Table.Cell>
                   <Table.Cell>{u.blogs.length}</Table.Cell>
                 </Table.Row>
               )}

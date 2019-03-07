@@ -12,7 +12,9 @@ const Blog = ({ deleteBlog, likeBlog, blog, currentUser }) => {
   const [showDelete, setShowDelete] = useState(false)
 
   useEffect(() => {
-    if (currentUser.id === blog.user) {
+    console.log(currentUser)
+    console.log(blog)
+    if (currentUser.id === blog.user || currentUser.id === blog.user.id) {
       setShowDelete(true)
     }
   }, [])
